@@ -25,13 +25,18 @@ const Header = () => {
                       <Link to="/order" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Order</Link>
                       <Link to="/about" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>About</Link>
                       <Link to="/contact" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Contact</Link>
+                    {
+                      isLoggedIn && (
                       <Link to="/dashboard" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Dashboard</Link>
-                        
+                      )
+                    }  
                     </nav>
                 </div>
                 {/* Profile and cart  */}
                 <div className='flex items-center space-x-4'>
-                    <Link to="/cart" className="relative">
+                {isLoggedIn? (
+                    <>
+                      <Link to="/cart" className="relative">
                       <div className="relative">
                         <HiShoppingCart className="text-2xl hover:text-orange-600" />
                         <span className="absolute -top-2 -right-2 bg-orange-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
@@ -42,34 +47,39 @@ const Header = () => {
 
                     <div className='relative' >
                       <button className='flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
-                      onMouseEnter={()=> setIsDropdownOpen(true)}
-                      onClick={()=> setIsDropdownOpen(!isDropdownOpen)}
-                      >
-                        {
-                          avator_url ? 
-                            <img className='w-8 h-8 rounded-full' src={avator_url} />:
-                            <FaUser />
-                          
-                        }
-                      </button>
-                      {/* dropdown menu */}
-                      {
-                        isDropdownOpen && (
-                        <div className='absolute right-0 w-48 mt-3 rounded-md shadow-lg z-10'
-                        onMouseLeave={()=> setIsDropdownOpen(false)}
+                        onMouseEnter={()=> setIsDropdownOpen(true)}
+                        onClick={()=> setIsDropdownOpen(!isDropdownOpen)}
                         >
-                          <div className='absolute h-3 w-full top-[12px]'></div>
-                              <Link to="/profile" className='block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100 transition'>Your Profile</Link>
-                              <button  className='w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-100 transition'>Sign Out</button>
-                        </div>
+                          {
+                            avator_url ? 
+                              <img className='w-8 h-8 rounded-full' src={avator_url} />:
+                              <FaUser />
+                            
+                          }
+                        </button>
+                        {/* dropdown menu */}
+                        {
+                          isDropdownOpen && (
+                          <div className='absolute right-0 w-48 mt-3 rounded-md shadow-lg z-10'
+                          onMouseLeave={()=> setIsDropdownOpen(false)}
+                          >
+                            <div className='absolute h-3 w-full top-[12px]'></div>
+                                <Link to="/profile" className='block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100 transition'>Your Profile</Link>
+                                <button  className='w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-100 transition'>Sign Out</button>
+                          </div>
                         )
                       }
                     </div>
-                    {/* Signin Button */}
+                    </>
+                  ):
+                  ( /* Signin Button */
                     <div>
                       <Link to="/signin" className='inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 '>SignIn</Link>
                       
                     </div>
+                  )
+                }
+                </div>
                     {/* humberger */}
                     <div className='mr-2 flex items-center sm:hidden'>
                       <button onClick={()=> setIsMenuOpen(!isMenuOpen)} className='inline-flex items-center justify-center p-2 rounded-md text-gray-400'>
@@ -78,7 +88,7 @@ const Header = () => {
 
                     </div>
                     
-                </div>
+               
               </div>
           </div>
         {/* Mobile menu */}
