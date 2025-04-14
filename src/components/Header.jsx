@@ -8,7 +8,7 @@ const Header = () => {
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const avator_url = "https://plus.unsplash.com/premium_photo-1667030474693-6d0632f97029?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0fGVufDB8fDB8fHww"
   return (
       <header className='bg-white shadow'>
@@ -81,6 +81,39 @@ const Header = () => {
                 </div>
               </div>
           </div>
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="sm:hidden">
+            <div className="pt-2 pb-3 space-y-1">
+              <Link to="/" className="block pl-3 pr-4 py-2  text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50">
+                Home
+              </Link>
+              <Link to="/order" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
+                Order
+              </Link>
+              <Link to="/about" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
+                About
+              </Link>
+              <Link to="/contact" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
+                Contact
+              </Link>
+              {isLoggedIn && (
+                <>
+                  <Link to="/dashboard" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
+                    Dashboard
+                  </Link>
+                </>
+              )}
+              {!isLoggedIn && (
+                <>
+                  <Link to="/signin" className="block pl-3 pr-4 py-2 border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50">
+                    SignIn
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </header>
   )
 }
