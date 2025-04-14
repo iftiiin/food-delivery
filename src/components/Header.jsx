@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import { Link } from 'react-router'
 import { FaUser } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
-
+import { IoMdMenu } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
 const Header = () => {
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
   const avator_url = "https://plus.unsplash.com/premium_photo-1667030474693-6d0632f97029?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0fGVufDB8fDB8fHww"
   return (
       <header className='bg-white shadow'>
@@ -26,7 +29,7 @@ const Header = () => {
                         
                     </nav>
                 </div>
-                
+                {/* Profile and cart  */}
                 <div className='flex items-center space-x-4'>
                     <Link to="/cart" className="relative">
                       <div className="relative">
@@ -67,6 +70,14 @@ const Header = () => {
                       <Link to="/signin" className='inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 '>SignIn</Link>
                       
                     </div>
+                    {/* humberger */}
+                    <div className='mr-2 flex items-center sm:hidden'>
+                      <button onClick={()=> setIsMenuOpen(!isMenuOpen)} className='inline-flex items-center justify-center p-2 rounded-md text-gray-400'>
+                      {isMenuOpen ? <IoIosClose /> : <IoMdMenu />}
+                      </button>
+
+                    </div>
+                    
                 </div>
               </div>
           </div>
