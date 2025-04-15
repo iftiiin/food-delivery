@@ -9,6 +9,7 @@ import Contact from './pages/Contact'
 import Dashboard from './pages/Dashboard'
 import SignUp from './pages/SignUp'
 import { Toaster } from 'react-hot-toast'
+import SignIn from './pages/SignIn'
 const App = () => {
   return (
     <>
@@ -22,6 +23,7 @@ const App = () => {
             <Route  path='/contact' element={<Contact />}/>
             <Route  path='/dashboard' element={<Dashboard />}/>
             <Route  path='/signup' element={<SignUp />}/>
+            <Route  path='/signin' element={<SignIn />}/>
         </Routes>
       </main>
       <Footer/>
