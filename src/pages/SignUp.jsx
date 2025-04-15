@@ -1,11 +1,32 @@
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { singUp } from '../lib/auth';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     console.log("Form submitted:", data);
+    const {email, password, username} = data
+    setIsLoading(true)
+    try {
+       await singUp(email, password, username)
+       toast.success("Account created successfully!");
+       setTimeout(()=> {
+          navigate("/signin")
+       }, 3000)
+    }catch(error){
+      console.error(error)
+      toast.error(error.message || "Failed to create account");
+    }finally{
+      setIsLoading(false)
+    }
+
   };
 
   return (
@@ -91,9 +112,8 @@ const SignUp = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition duration-200 disabled:cursor-not-allowed"
-            >
-              Create Account
+              className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition duration-200 disabled:cursor-not-allowed" disabled={isLoading}>
+               {isLoading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
 
