@@ -5,14 +5,18 @@ import { singUp } from '../lib/auth';
 import toast from 'react-hot-toast';
 
 const SignUp = () => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
   
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const onSubmit = async(data) => {
-    console.log("Form submitted:", data);
-    const {email, password, username} = data
+  const onSubmit = async({email, password, username}) => {
+    
     setIsLoading(true)
     try {
        await singUp(email, password, username)

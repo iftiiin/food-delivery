@@ -5,3 +5,16 @@ export async function singUp(email, password, username=""){
         password: password
     })
 }
+
+export async function signIn (email,password) {
+
+    let { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    })
+    if(error) throw error;
+  
+    
+  
+    return data;
+  }
