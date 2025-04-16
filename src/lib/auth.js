@@ -74,3 +74,71 @@ export async function signIn (email,password) {
   
     return data;
   }
+
+
+  export async function getUserProfile(userId) {
+    const { data : sessionData } = await supabase.auth.getSession()
+
+    const { data , error } = await supabase.from('users')
+        .select("*")
+        .eq("id", userId)
+        .single()
+
+        if(error && error.code === "PGRST116"){
+            console.log('No profile found, attempting to create one for user:', userId)
+
+          const { data : userData } = await supabase.auth.getUser();
+
+          const email = userData?.user.email;
+
+          const defaultUsername = email ? email.split("@")[0] : `user_${Date.now()}`;
+
+          // create profile 
+
+          const { data: newProfile, error : profileError } = await supabase
+      
+          .from('users')
+          .insert({
+              id: userId,
+              username: defaultUsername,
+              avatar_url: null
+          })
+          .select()
+          .single()
+
+          if(profileError){
+              console.error("profile creation error:", profileError)
+              throw profileError
+          }else{
+              console.log("Profile created successfully", newProfile)
+          }
+
+          return newProfile
+        }
+
+        const { data: customer, error: customerError } = await supabase
+          .from("customers")
+          .select("*")
+          .eq("user_id", userId)
+          .single();
+
+        if (customerError && customerError.code !== "PGRST116") {
+          console.error("Error fetching customer:", customerError);
+          throw customerError;
+        }
+
+        
+        // general error 
+        if(error){
+            console.error('Error fetching profile:', error)
+            throw error
+        }
+
+        console.log("exiting profile", data)
+
+        return {
+          profile,
+          customer: customer || null
+        };
+  }
+  
