@@ -76,7 +76,7 @@ export async function signIn (email,password) {
   }
 
 
-  export async function getUserProfile(userId) {
+export async function getUserProfile(userId) {
     const { data : sessionData } = await supabase.auth.getSession()
 
     const { data , error } = await supabase.from('users')
@@ -141,4 +141,18 @@ export async function signIn (email,password) {
           customer: customer || null
         };
   }
+
+//   Login or Logout state
+export  function onAuthChange  (callback)  {
+  const {data} = supabase.auth.onAuthStateChange((event,session) =>{
+
+    callback(session?.user || null, event);
+  }
+ )
+  return () => data.subscription.unsubscribe();
+}
+
+export const signOut = async () =>{
+  await supabase.auth.signOut();
   
+}
