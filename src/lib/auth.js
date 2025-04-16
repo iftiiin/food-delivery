@@ -4,7 +4,11 @@ export async function singUp(email, password, username=""){
         email: email,
         password: password
     })
-
+    if (error) {
+      console.error("Signup error:", error.message);
+      return error;
+    }
+    
     if(data?.user){
       const {data: sessionData} = await supabase.auth.getSession();
 
@@ -34,7 +38,6 @@ export async function singUp(email, password, username=""){
           console.log("profile created successfully", profileData)
       }
     }
-    
     return data
 }
 

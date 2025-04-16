@@ -19,19 +19,25 @@ const SignUp = () => {
     
     setIsLoading(true)
     try {
-       await singUp(email, password, username)
-       toast.success("Account created successfully!");
-       setTimeout(()=> {
-          navigate("/signin")
-       }, 3000)
-    }catch(error){
-      console.error(error)
-      toast.error(error.message || "Failed to create account");
-    }finally{
-      setIsLoading(false)
-    }
-
-  };
+      const result = await singUp(email, password, username);
+  
+      if (result?.error || result?.message) {
+        // It failed, show error toast
+        toast.error(result.message || "Failed to create account");
+      } else {
+        // Success, show success toast
+        toast.success("Account created successfully!");
+        setTimeout(() => {
+          navigate("/signin");
+        }, 3000);
+      }
+  
+    } catch (error) {
+      console.error("Signup failed:", error);
+      toast.error(error.message || "Something went wrong!");
+    } finally {
+      setIsLoading(false);
+    }}
 
   return (
     <div className="min-h-screen flex items-center justify-center py-8 bg-gray-50 px-4">
