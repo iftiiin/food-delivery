@@ -37,6 +37,27 @@ export async function singUp(email, password, username=""){
       }else {
           console.log("profile created successfully", profileData)
       }
+    // create customer
+
+    const {data: customerData, error: customerError} = await supabase
+    .from("customers")
+    .insert(
+      {
+        user_id:data.user.id,
+        name: displayName,
+        email: data.user.email,
+       
+      }
+    )
+    .select()
+    .single()
+
+    if(customerError){
+      console.error("customer creation error", customerError)
+    }else {
+        console.log("customer created successfully", customerData)
+    }
+
     }
     return data
 }
