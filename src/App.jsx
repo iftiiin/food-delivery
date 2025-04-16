@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard'
 import SignUp from './pages/SignUp'
 import { Toaster } from 'react-hot-toast'
 import SignIn from './pages/SignIn'
+import Profile from './pages/Profile'
 const App = () => {
   return (
     <>
@@ -24,6 +25,7 @@ const App = () => {
             <Route  path='/dashboard' element={<Dashboard />}/>
             <Route  path='/signup' element={<SignUp />}/>
             <Route  path='/signin' element={<SignIn />}/>
+            <Route  path='/profile' element={<Profile />}/>
         </Routes>
       </main>
       <Footer/>
