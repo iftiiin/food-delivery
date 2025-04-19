@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { FaUser } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
@@ -10,7 +10,10 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const {isLoggedIn, profile, logout} = useAuth()
-  const avator_url = "https://plus.unsplash.com/premium_photo-1667030474693-6d0632f97029?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0fGVufDB8fDB8fHww"
+  const avatar_url = profile?.profile.avatar_url 
+  useEffect(()=> {
+    console.log("kkkkkkkkkkkkkkkkkkk", profile)
+  })
   return (
       <header className='bg-white shadow'>
           <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-8'>
@@ -52,8 +55,8 @@ const Header = () => {
                         onClick={()=> setIsDropdownOpen(!isDropdownOpen)}
                         >
                           {
-                            avator_url ? 
-                              <img className='w-8 h-8 rounded-full' src={avator_url} />:
+                            avatar_url ? 
+                              <img className='w-8 h-8 rounded-full' src={avatar_url} />:
                               <FaUser />
                             
                           }
@@ -61,13 +64,13 @@ const Header = () => {
                         {/* dropdown menu */}
                         {
                           isDropdownOpen && (
-                          <div className='absolute right-0 w-48 mt-3 rounded-md shadow-lg z-10'
-                          onMouseLeave={()=> setIsDropdownOpen(false)}
-                          >
-                            <div className='absolute h-3 w-full top-[12px]'></div>
-                                <Link to="/profile" className='block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100 transition'>Your Profile</Link>
-                                <button  className='w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-100 transition'>Sign Out</button>
-                          </div>
+                            <div className='absolute right-0 w-48 mt-3 rounded-md shadow-lg z-10'
+                            onMouseLeave={()=> setIsDropdownOpen(false)}
+                            >
+                            
+                              <Link to="/profile" className='block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100 transition'>Your Profile</Link>
+                              <button  onClick={logout} className='w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-100 transition'>Sign Out</button>
+                            </div>
                         )
                       }
                     </div>
@@ -113,6 +116,8 @@ const Header = () => {
                   <Link to="/dashboard" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
                     Dashboard
                   </Link>
+                  <Link to="/profile" className='block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50'>Your Profile</Link>
+                  <button  onClick={logout} className='block-inline pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50'>Sign Out</button>
                 </>
               )}
               {!isLoggedIn && (
