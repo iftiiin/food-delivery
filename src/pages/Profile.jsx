@@ -1,13 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FiCamera, FiMail, FiUser, FiMapPin, FiPhone } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
+import { getUserProfile } from '../lib/auth';
 const Profile = () => {
     const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [avatar, setAvatar] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const { user } = useAuth();
 
+
+    useEffect(() => {
+
+        if (user) {
+            fetchUserProfile()
+        }
+
+    }, [user])
+
+    const fetchUserProfile = async () => {
+        try {
+            setLoading(true);
+            const { profile, customer } = await getUserProfile(user.id);
+            console.log(customer)
+            if (profile) {
+                setUsername(profile.username);
+                setPhone(customer.phone || "");
+                setAddress(customer.address || "")
+                setAvatarUrl(profile.avator_url)
+            }
+            return
+        } catch (error) {
+            console.log("error getting usr profile", error)
+        } finally {
+            setLoading(false)
+        }
+    }
     const handleAvatarChange = (e) => {
 
         if (e.target.files && e.target.files[0]) {
@@ -68,9 +99,9 @@ const Profile = () => {
 
                             <div>
                                 <h2 className="mt-4 text-2xl font-bold text-black">
-                                    Your Profile
+                                {username || 'Your Profile'}
                                 </h2>
-                                <p className="text-black">iftin@gmail.com</p>
+                                <p >{user?.email}</p>
                             </div>
                         </div>
                     </div>
@@ -112,6 +143,7 @@ const Profile = () => {
                                     <input
                                         type="email"
                                         className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md bg-gray-50"
+                                        value={user?.email || ''}
                                         disabled
                                     />
                                 </div>
