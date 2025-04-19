@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { FiCamera, FiMail, FiUser, FiMapPin, FiPhone } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import { getUserProfile } from '../lib/auth';
+import supabase from '../lib/supabase';
 const Profile = () => {
     const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
@@ -30,7 +31,7 @@ const Profile = () => {
                 setUsername(profile.username);
                 setPhone(customer.phone || "");
                 setAddress(customer.address || "")
-                setAvatarUrl(profile.avator_url)
+                setAvatarUrl(profile.avatar_url)
             }
             return
         } catch (error) {
@@ -58,9 +59,63 @@ const Profile = () => {
 
 
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        try {
+
+            setLoading(true);
+
+            let updates = { username }
+
+            if (avatar) { 
+                const fileExt = avatar.name.split(".").pop();
+                const fileName = `${user.id}-${Math.random().toString(36).substring(2)}`;
+                const filePath = `avatars/${fileName}.${fileExt}`;
+                
+                const { error: uploadError } = await supabase.storage.from("avatars").upload(filePath, avatar);
+
+                if (uploadError) throw uploadError
+                const { data } = supabase.storage.from("avatars")
+                    .getPublicUrl(filePath);
+
+                updates = {
+                    ...updates,
+                    avatar_url: data.publicUrl
+                }
+
+                setAvatarUrl(data.publicUrl)
+            }
+
+            console.log("updates to be applied")
+
+            const { error, data } = await supabase
+
+                .from('users')
+                .update(updates)
+                .eq('id', user.id)
+                .select('username, avatar_url')
+                .single();
+
+            if (error) throw error
+
+            if (data) {
+                setAvatarUrl(data.avatar_url)
+                setUsername(data.username)
+            }
+            // customer data update
+            const { error: customerError } = await supabase
+            .from("customers")
+            .update({ phone, address })
+            .eq("user_id", user.id);
+
+            if (customerError) throw customerError;
+            toast.success("Profile updated successfully")
+
+        } catch (error) {
+            toast.error(error.message || "error updating user profile")
+        }
 
     }
     return (
