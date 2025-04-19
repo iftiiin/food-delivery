@@ -12,9 +12,6 @@ export async function singUp(email, password, username=""){
     if(data?.user){
       const {data: sessionData} = await supabase.auth.getSession();
 
-      if(!sessionData.session){
-        return data 
-      }
 
       const displayName = username || email.split("@")[0]
 
@@ -137,7 +134,7 @@ export async function getUserProfile(userId) {
         console.log("exiting profile", data)
 
         return {
-          profile,
+          profile: data,
           customer: customer || null
         };
   }

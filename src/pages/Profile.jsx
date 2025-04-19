@@ -1,9 +1,32 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { FiCamera, FiMail, FiUser, FiMapPin, FiPhone } from 'react-icons/fi';
 const Profile = () => {
-    const [username, setUsername] = useState(null);
-    const [phone, setPhone] = useState(null);
-    const [address, setAddress] = useState(null);
+    const [username, setUsername] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [avatar, setAvatar] = useState(null);
+    const [avatarUrl, setAvatarUrl] = useState(null);
+
+    const handleAvatarChange = (e) => {
+
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error("file size is too large")
+                return
+            }
+
+            setAvatar(file)
+
+            const previewURL = URL.createObjectURL(file)
+            setAvatarUrl(previewURL)
+
+        }
+
+
+    }
     const handleSubmit = (e) => {
 
         e.preventDefault();
@@ -18,7 +41,7 @@ const Profile = () => {
                             <div className="relative group">
                                 <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
                                     <img
-                                        src='https://plus.unsplash.com/premium_photo-1669075651831-b7ed6763a9c2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXNlciUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D'
+                                        src={avatarUrl || 'https://plus.unsplash.com/premium_photo-1669075651831-b7ed6763a9c2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXNlciUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D'}
                                         alt="Profile"
                                         className="w-full h-full object-cover"
                                     />
@@ -37,6 +60,7 @@ const Profile = () => {
                                     id="avatar-upload"
                                     className=" hidden"
                                     accept="image/*"
+                                    onChange={handleAvatarChange}
                                 />
                             </div>
 

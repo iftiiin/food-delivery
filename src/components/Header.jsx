@@ -4,11 +4,12 @@ import { FaUser } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
 import { IoMdMenu } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { useAuth } from '../context/AuthContext';
 const Header = () => {
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const {isLoggedIn, profile, logout} = useAuth()
   const avator_url = "https://plus.unsplash.com/premium_photo-1667030474693-6d0632f97029?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0fGVufDB8fDB8fHww"
   return (
       <header className='bg-white shadow'>
