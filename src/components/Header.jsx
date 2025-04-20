@@ -11,9 +11,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const {isLoggedIn, profile, logout} = useAuth()
   const avatar_url = profile?.profile.avatar_url 
-  useEffect(()=> {
-    console.log("kkkkkkkkkkkkkkkkkkk", profile)
-  })
   return (
       <header className='bg-white shadow'>
           <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-8'>

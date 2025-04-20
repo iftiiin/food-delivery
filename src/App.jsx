@@ -6,7 +6,6 @@ import Home from './pages/Home'
 import Order from './pages/Order'
 import About from './pages/About'
 import Contact from './pages/Contact'
-import Dashboard from './pages/Dashboard'
 import SignUp from './pages/SignUp'
 import { Toaster } from 'react-hot-toast'
 import SignIn from './pages/SignIn'
@@ -14,6 +13,14 @@ import Profile from './pages/Profile'
 import { AuthProvider } from './context/AuthContext'
 import UnAuthenticatedRoute from './context/UnAuthenticatedRoute'
 import ProtectedRoute from './context/ProtectedRoute'
+import Overview from './pages/dashboard/overview'
+import OrderList from './pages/dashboard/OrderList'
+import CustomerList from './pages/dashboard/CustomerList'
+import ProductList from './pages/dashboard/ProductList'
+import CategoryList from './pages/dashboard/CategoryList'
+import PaymentList from './pages/dashboard/PaymentList'
+import UserList from './pages/dashboard/UserList'
+import DashboardLayout from './pages/dashboard/DashboardLayout'
 const App = () => {
   return (
     <AuthProvider>
@@ -41,9 +48,17 @@ const App = () => {
             {/* protected route */}
             <Route path='/dashboard' element={
               <ProtectedRoute>
-                  <Dashboard />
+                  <DashboardLayout />
               </ProtectedRoute>
-              }/>
+              }>
+              <Route index element={<Overview/>}/>
+              <Route path='orders' element={<OrderList/>}/>
+              <Route path='customers' element={<CustomerList/>}/>
+              <Route path='categories' element={<CategoryList/>}/>
+              <Route path='products' element={<ProductList/>}/>
+              <Route path='payments' element={<PaymentList/>}/>
+              <Route path='users' element={<UserList/>}/>
+            </Route>
         </Routes>
       </main>
       <Footer/>
