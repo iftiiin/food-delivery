@@ -9,6 +9,7 @@ import {
 } from "react-icons/hi";
 import { MdCategory, MdPayment } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
+import { useState } from "react";
 
 export default function Sidebar() {
 
@@ -59,7 +60,7 @@ export default function Sidebar() {
                 <div className="mb-6">
                     <p className="text-xs uppercase mb-2">Product Management</p>
                     <NavLink
-                    to="dashboard/categories"
+                    to="categories"
                     className={({ isActive }) =>
                         `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
                         isActive
@@ -72,7 +73,7 @@ export default function Sidebar() {
                         <span>Categories</span>
                     </NavLink>
                     <NavLink
-                    to="dashboard/products"
+                    to="products"
                     className={({ isActive }) =>
                         `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
                         isActive
@@ -90,7 +91,7 @@ export default function Sidebar() {
                 <div className="mb-6">
                     <p className="text-xs uppercase mb-2">Sales</p>
                     <NavLink
-                    to="/dashboard/orders"
+                    to="orders"
                     className={({ isActive }) =>
                         `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
                         isActive
@@ -103,7 +104,7 @@ export default function Sidebar() {
                         <span>Orders</span>
                     </NavLink>
                     <NavLink
-                    to="dashboard/payments"
+                    to="payments"
                     className={({ isActive }) =>
                         `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
                         isActive
@@ -117,10 +118,10 @@ export default function Sidebar() {
                     </NavLink>
                 </div>
                 {/* Customer Management */}
-                <div className="mb-6">
+                <div className="mb-6" >
                     <p className="text-xs uppercase mb-2">Customer Management</p>
                     <NavLink
-                        to="dashboard/customers"
+                        to="customers"
                         className={({ isActive }) =>
                         `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
                             isActive
@@ -137,7 +138,7 @@ export default function Sidebar() {
                 <div>
                     <p className="text-xs uppercase mb-2">Users</p>
                     <NavLink
-                    to="dashoard/users"
+                    to="users"
                     className={({ isActive }) =>
                         `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
                         isActive

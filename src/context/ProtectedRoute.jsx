@@ -18,7 +18,7 @@ export default function ProtectedRoute({ children, redirectTo = "/signin" }) {
 
 
     
-    if (isLoggedIn && profile?.is_admin) {
+    if (isLoggedIn ) {
         return children;
       }
     
