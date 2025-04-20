@@ -5,20 +5,37 @@ import {
   HiClipboardList,
   HiShoppingBag,
   HiUsers,
+  HiMenu,
 } from "react-icons/hi";
 import { MdCategory, MdPayment } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
 
 export default function Sidebar() {
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
  
     return (
         <>
+        {/* Hamburger Button  */}
+        <button
+            className="fixed top-8  z-50 text-2xl text-gray-700 sm:hidden"
+            onClick={() => setIsMenuOpen(true)}
+        >
+            <HiMenu />
+        </button>
         {/* Sidebar */}
         <aside
             className={`fixed z-40 h-screen w-60 border-r border-slate-300 transition-transform duration-300
             ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:static sm:z-0`}
         >
+            {/* Close button */}
+            <div className="sm:hidden flex justify-end p-2">
+                <button onClick={() => setIsMenuOpen(false)} className="text-xl">
+                    <IoClose />
+                </button>
+            </div>
 
-            <nav className="p-4 overflow-y-auto">
+            <nav onClick={()=>setIsMenuOpen(false)} className="p-4 overflow-y-auto">
                 {/* Main */}
                 <div className="mb-6">
                     <p className="text-xs uppercase mb-2">Main</p>
