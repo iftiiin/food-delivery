@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { Route, Routes } from 'react-router'
+import { Route, Routes, useLocation } from 'react-router'
 import Home from './pages/Home'
 import Order from './pages/Order'
 import About from './pages/About'
@@ -22,6 +22,8 @@ import PaymentList from './pages/dashboard/PaymentList'
 import UserList from './pages/dashboard/UserList'
 import DashboardLayout from './pages/dashboard/DashboardLayout'
 const App = () => {
+  const location = useLocation();
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
   return (
     <AuthProvider>
       <Header/>
@@ -61,7 +63,8 @@ const App = () => {
             </Route>
         </Routes>
       </main>
-      <Footer/>
+      {/* Conditionally render Footer only when not on dashboard */}
+      {!isDashboardRoute && <Footer />}
       <Toaster />
     </AuthProvider>
   )
