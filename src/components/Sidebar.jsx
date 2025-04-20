@@ -19,14 +19,14 @@ export default function Sidebar() {
         <>
         {/* Hamburger Button  */}
         <button
-            className="fixed top-8  z-50 text-2xl text-gray-700 sm:hidden"
+            className="fixed top-6 left-6 z-50 text-2xl text-gray-700 sm:hidden"
             onClick={() => setIsMenuOpen(true)}
         >
             <HiMenu />
         </button>
         {/* Sidebar */}
         <aside
-            className={`fixed z-40 h-screen w-60 border-r border-slate-300 transition-transform duration-300
+            className={`fixed z-40 h-screen w-60 border-t border-r bg-white border-slate-300 transition-transform duration-300
             ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:static sm:z-0`}
         >
             {/* Close button */}
