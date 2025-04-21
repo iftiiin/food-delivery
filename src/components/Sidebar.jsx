@@ -26,8 +26,13 @@ export default function Sidebar() {
         </button>
         {/* Sidebar */}
         <aside
-            className={`fixed z-40 h-screen w-60 border-t border-r bg-white border-slate-300 transition-transform duration-300
-            ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:static sm:z-0`}
+        className={`
+            fixed top-15 left-0 h-screen w-60 bg-white border-r border-slate-300
+            transition-transform duration-300
+            z-50 sm:z-0
+            ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+            sm:translate-x-0
+        `}
         >
             {/* Close button */}
             <div className="sm:hidden flex justify-end p-2">

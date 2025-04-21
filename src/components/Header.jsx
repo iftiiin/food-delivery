@@ -12,7 +12,7 @@ const Header = () => {
   const {isLoggedIn, profile, logout} = useAuth()
   const avatar_url = profile?.profile.avatar_url 
   return (
-      <header className='bg-white shadow'>
+      <header className='fixed top-0 left-0 right-0 bg-white shadow z-50 h-16'>
           <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-8'>
               <div className='flex justify-between h-16'>
                 <div></div>

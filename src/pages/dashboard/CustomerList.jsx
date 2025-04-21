@@ -43,7 +43,7 @@ const CustomerList = () => {
     ]
   )
 
-  return (
+return (
     <div className="p-6 min-h-screen">
       <button className="bg-gray-300 text-black px-5 py-2 rounded-lg shadow-md transition duration-300 mb-4">
         + New Customer
@@ -81,7 +81,7 @@ const CustomerList = () => {
         </table>
       </div>
     </div>
-  )
+)
 }
 
 export default CustomerList;

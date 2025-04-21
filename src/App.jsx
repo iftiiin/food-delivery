@@ -27,7 +27,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Header/>
-      <main>
+      <main className='pt-16'>
         {/* routes */}
         <Routes>
             <Route path='/' element={<Home/>} />
