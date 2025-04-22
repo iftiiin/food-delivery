@@ -1,5 +1,10 @@
 
 import React, { useState } from "react";
+import { createCustomer } from "../../lib/customers";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+
+
 
 const CustomerForm = () => {
   const [formData, setFormData] = useState({
@@ -8,14 +13,26 @@ const CustomerForm = () => {
     phone: "",
     address: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Registered Data:", formData);
+    setIsLoading(true);
+    try {
+      await createCustomer(formData);
+      toast.success('Customer created successfully');
+    //   setFormData({ name: '', email: '', phone: '', address: '' }); 
+      navigate("/dashboard/customers")
+    } catch (error) {
+      toast.error('Failed to create customer');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,7 +84,7 @@ const CustomerForm = () => {
               type="submit"
               className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 shadow-sm transition duration-200"
             >
-              Create
+              {isLoading ? 'Creating...' : 'Create'}
             </button>
           </div>
         </form>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getCustomers } from '../../lib/customers'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router'
-
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const CustomerList = () => {
 
@@ -65,8 +65,8 @@ const CustomerList = () => {
                   <td className="px-4 py-3 text-slate-700">{customer.address}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-2">
-                      <button className="text-blue-600 hover:text-blue-800">Edit</button>
-                      <button className="text-red-600 hover:text-red-800">Delete</button>
+                      <button className="text-blue-600 hover:text-blue-800"> <FaEdit size={18} /></button>
+                      <button className="text-red-600 hover:text-red-800 ml-2"> <FaTrash size={18} /></button>
                     </div>
                   </td>
                 </tr>
