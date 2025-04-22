@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { getCustomers } from '../../lib/customers'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router'
+
 
 const CustomerList = () => {
 
     const [customers, setCustomers] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
     
 
     useEffect(() => {
@@ -34,13 +38,16 @@ const CustomerList = () => {
 
     return (
       <div className="p-6 min-h-screen">
-        <button className="bg-gray-300 text-black px-5 py-2 rounded-lg shadow-md transition duration-300 mb-4">
+        <button 
+          className="text-orange-500 bg-white border border-orange-200 p-3 mb-5 cursor-pointer o"
+          onClick={()=>  navigate("/dashboard/customers/create")}
+          >
           + New Customer
         </button>
 
         <div className="overflow-x-auto">
           <table className="w-full  overflow-hidden shadow-sm">
-            <thead className="bg-gray-300 text-black sticky top-0 z-10">
+            <thead className="bg-gray-100 text-black sticky top-0 z-10">
               <tr>
                 <th className="px-4 py-3 text-left">Name</th>
                 <th className="px-4 py-3 text-left">Email</th>
