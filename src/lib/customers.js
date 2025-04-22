@@ -28,6 +28,7 @@ export const getCustomers = async ({ limit = 10, offset = 0 } = {}) => {
   const { data, error, count } = await supabase
     .from('customers')
     .select('*')
+    .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1)
 
   if (error) {

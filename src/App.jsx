@@ -58,6 +58,7 @@ const App = () => {
               <Route path='orders' element={<OrderList/>}/>
               <Route path='customers' element={<CustomerList/>}/>
               <Route path='customers/create' element={<CustomerForm/>}/>
+              <Route path='customers/:id' element={<CustomerForm/>}/>
               <Route path='categories' element={<CategoryList/>}/>
               <Route path='products' element={<ProductList/>}/>
               <Route path='payments' element={<PaymentList/>}/>
