@@ -6,6 +6,7 @@ export const createOrder = async (order, orderLines) => {
     .from("orders")
     .insert({
       customer_id: order.customer_id,
+      date: order.date,
       status: order.status,
       total: order.total,
     })
@@ -87,6 +88,7 @@ export const updateOrder = async (id, updates, lines) => {
       .from("orders")
       .update({
         customer_id: updates.customer_id,
+        date: updates.date,
         status: updates.status,
         total: updates.total
       })

@@ -24,6 +24,7 @@ import DashboardLayout from './pages/dashboard/DashboardLayout'
 import CustomerForm from './pages/dashboard/CustomerForm'
 import CategoryForm from './pages/dashboard/CategoryForm'
 import ProductForm from './pages/dashboard/ProductForm'
+import OrderForm from './pages/dashboard/OrderForm'
 const App = () => {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith('/dashboard');
@@ -58,6 +59,8 @@ const App = () => {
               }>
               <Route index element={<Overview/>}/>
               <Route path='orders' element={<OrderList/>}/>
+              <Route path='orders/create' element={<OrderForm/>}/>
+              <Route path='orders/:id' element={<OrderForm/>}/>
               <Route path='customers' element={<CustomerList/>}/>
               <Route path='customers/create' element={<CustomerForm/>}/>
               <Route path='customers/:id' element={<CustomerForm/>}/>
