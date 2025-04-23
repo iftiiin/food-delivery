@@ -1,12 +1,11 @@
 import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { Route, Routes } from 'react-router'
+import { Route, Routes, useLocation } from 'react-router'
 import Home from './pages/Home'
 import Order from './pages/Order'
 import About from './pages/About'
 import Contact from './pages/Contact'
-import Dashboard from './pages/Dashboard'
 import SignUp from './pages/SignUp'
 import { Toaster } from 'react-hot-toast'
 import SignIn from './pages/SignIn'
@@ -14,11 +13,25 @@ import Profile from './pages/Profile'
 import { AuthProvider } from './context/AuthContext'
 import UnAuthenticatedRoute from './context/UnAuthenticatedRoute'
 import ProtectedRoute from './context/ProtectedRoute'
+import Overview from './pages/dashboard/overview'
+import OrderList from './pages/dashboard/OrderList'
+import CustomerList from './pages/dashboard/CustomerList'
+import ProductList from './pages/dashboard/ProductList'
+import CategoryList from './pages/dashboard/CategoryList'
+import PaymentList from './pages/dashboard/PaymentList'
+import UserList from './pages/dashboard/UserList'
+import DashboardLayout from './pages/dashboard/DashboardLayout'
+import CustomerForm from './pages/dashboard/CustomerForm'
+import CategoryForm from './pages/dashboard/CategoryForm'
+import ProductForm from './pages/dashboard/ProductForm'
+import OrderForm from './pages/dashboard/OrderForm'
 const App = () => {
+  const location = useLocation();
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
   return (
     <AuthProvider>
       <Header/>
-      <main>
+      <main className='pt-16'>
         {/* routes */}
         <Routes>
             <Route path='/' element={<Home/>} />
@@ -41,12 +54,29 @@ const App = () => {
             {/* protected route */}
             <Route path='/dashboard' element={
               <ProtectedRoute>
-                  <Dashboard />
+                  <DashboardLayout />
               </ProtectedRoute>
-              }/>
+              }>
+              <Route index element={<Overview/>}/>
+              <Route path='orders' element={<OrderList/>}/>
+              <Route path='orders/create' element={<OrderForm/>}/>
+              <Route path='orders/:id' element={<OrderForm/>}/>
+              <Route path='customers' element={<CustomerList/>}/>
+              <Route path='customers/create' element={<CustomerForm/>}/>
+              <Route path='customers/:id' element={<CustomerForm/>}/>
+              <Route path='categories' element={<CategoryList/>}/>
+              <Route path='categories/create' element={<CategoryForm/>}/>
+              <Route path='categories/:id' element={<CategoryForm/>}/>
+              <Route path='products' element={<ProductList/>}/>
+              <Route path='products/create' element={<ProductForm/>}/>
+              <Route path='products/:id' element={<ProductForm/>}/>
+              <Route path='payments' element={<PaymentList/>}/>
+              <Route path='users' element={<UserList/>}/>
+            </Route>
         </Routes>
       </main>
-      <Footer/>
+      {/* Conditionally render Footer only when not on dashboard */}
+      {!isDashboardRoute && <Footer />}
       <Toaster />
     </AuthProvider>
   )
