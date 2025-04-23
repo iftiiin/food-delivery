@@ -88,8 +88,8 @@ const CategoryList = () => {
               </tr>
             </thead>
             <tbody>
-              {categories.length > 0 ? (
-                categories.map((category) => (
+              {optimisticCategories.length > 0 ? (
+                optimisticCategories.map((category) => (
                   <tr key={category.id} className="border-b border-slate-200 bg-white hover:bg-slate-50 transition">
                     <td className="px-4 py-3 text-slate-700">{category.name}</td>
                     <td className="px-4 py-3">
