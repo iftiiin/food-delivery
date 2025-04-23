@@ -6,7 +6,7 @@ export const createProduct = async (product) => {
   const productData = {
     name: product.name,
     image: product.image,
-    category_id: product.category_id,
+    category_id: product.category,
     price: product.price,
   }
 
@@ -63,7 +63,7 @@ export const updateProduct = async (id, updates) => {
     .update({
       name: updates.name,
       image: updates.image,
-      category_id: updates.category_id,
+      category_id: updates.category,
       price: updates.price,
     })
     .eq('id', id)

@@ -28,10 +28,8 @@ const ProductList = () => {
     try {
       setLoading(true);
       const { categories } = await getCategories();
-      console.log("caaaaaaaaaaaaaaaaaaaaa", categories)
-      // setProducts(products);
       setCategories(categories);
-      const { products } = await getProducts(); // make sure this returns category name joined
+      const { products } = await getProducts(); 
       setProducts(products);
     } catch (error) {
       console.error('Error fetching products:', error);

@@ -23,6 +23,7 @@ import UserList from './pages/dashboard/UserList'
 import DashboardLayout from './pages/dashboard/DashboardLayout'
 import CustomerForm from './pages/dashboard/CustomerForm'
 import CategoryForm from './pages/dashboard/CategoryForm'
+import ProductForm from './pages/dashboard/ProductForm'
 const App = () => {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith('/dashboard');
@@ -64,6 +65,8 @@ const App = () => {
               <Route path='categories/create' element={<CategoryForm/>}/>
               <Route path='categories/:id' element={<CategoryForm/>}/>
               <Route path='products' element={<ProductList/>}/>
+              <Route path='products/create' element={<ProductForm/>}/>
+              <Route path='products/:id' element={<ProductForm/>}/>
               <Route path='payments' element={<PaymentList/>}/>
               <Route path='users' element={<UserList/>}/>
             </Route>
