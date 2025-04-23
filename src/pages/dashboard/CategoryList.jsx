@@ -8,7 +8,7 @@ const CategoryList = () => {
 
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
-    
+    const navigate = useNavigate();
     
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const CategoryList = () => {
       <div className="p-6 min-h-screen">
         <button 
           className="text-orange-500 bg-white border border-orange-200 p-3 mb-5 cursor-pointer o"
-          
+          onClick={()=>  navigate("/dashboard/categories/create")}
           >
           + New Category
         </button>
@@ -55,12 +55,13 @@ const CategoryList = () => {
             </thead>
             <tbody>
               {categories.length > 0 ? (
-                categories.map((Category) => (
-                  <tr key={Category.id} className="border-b border-slate-200 bg-white hover:bg-slate-50 transition">
-                    <td className="px-4 py-3 text-slate-700">{Category.name}</td>
+                categories.map((category) => (
+                  <tr key={category.id} className="border-b border-slate-200 bg-white hover:bg-slate-50 transition">
+                    <td className="px-4 py-3 text-slate-700">{category.name}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-2">
                         <Link
+                          to={`/dashboard/categories/${category.id}`}
                           className="p-2 text-blue-600 hover:text-blue-800 rounded-full hover:bg-orange-50"
                           title="Edit Category"
                         >
