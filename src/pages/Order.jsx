@@ -1,8 +1,11 @@
 import React from 'react'
+import ProductList from '../components/ProductList'
 
 const Order = () => {
   return (
-    <div>Order</div>
+    <div className='max-w-4xl mx-auto'>
+      <ProductList />
+    </div>
   )
 }
 
