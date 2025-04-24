@@ -8,6 +8,7 @@ export const createProduct = async (product) => {
     image: product.image,
     category_id: product.category,
     price: product.price,
+    description: product.description
   }
 
   const { data, error } = await supabase
@@ -65,6 +66,7 @@ export const updateProduct = async (id, updates) => {
       image: updates.image,
       category_id: updates.category,
       price: updates.price,
+      description: updates.description
     })
     .eq('id', id)
     .select()
