@@ -117,7 +117,7 @@ export const OrderProvider = ({children}) =>{
  const useOrder = ()=>{
     const context = useContext(OrderContext);
     if(context === undefined){
-        throw new Error("Context must be in shopContext !");
+        throw new Error("Context must be in orderContext !");
     }
 
     return context;

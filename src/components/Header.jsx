@@ -5,12 +5,14 @@ import { HiShoppingCart } from "react-icons/hi";
 import { IoMdMenu } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
 import { useAuth } from '../context/AuthContext';
+import useOrder from '../context/OrderContext';
 const Header = () => {
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const {isLoggedIn, profile, logout} = useAuth()
   const avatar_url = profile?.profile.avatar_url 
+  const { products } = useOrder()
   return (
       <header className='fixed top-0 left-0 right-0 bg-white shadow z-50 h-16'>
           <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-8'>
@@ -42,7 +44,7 @@ const Header = () => {
                       <div className="relative">
                         <HiShoppingCart className="text-2xl hover:text-orange-600" />
                         <span className="absolute -top-2 -right-2 bg-orange-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                          0
+                          {products.length}
                         </span>
                       </div>
                     </Link>

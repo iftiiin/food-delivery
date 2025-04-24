@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { getProductById } from '../lib/products';
 import ProductDetailSkeleton from './ProductDetailSkeleton';
+import useOrder from '../context/OrderContext';
 
 const ProductDetails = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const ProductDetails = () => {
 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(false);
-
+    const { AddItemToCart } = useOrder()
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -25,6 +26,7 @@ const ProductDetails = () => {
 
         fetchData();
     }, [id]);
+
 
     if(!product) return <ProductDetailSkeleton />
 
@@ -62,6 +64,7 @@ const ProductDetails = () => {
                     <div className="flex gap-4">
                         <button
                             className="bg-orange-600 text-white px-4 py-2 rounded-lg shadow hover:bg-orange-700 transition-colors duration-200 cursor-pointer"
+                            onClick={() => AddItemToCart(product)}
                             >
                             Add To Cart
                         </button>
