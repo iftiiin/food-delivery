@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const ProductList = () => {
     const [selectCategory, setSelectCategory] = useState("All");
-
+    const [loading, setLoading] = useState(false)
     const categories = [
         "All", "Categ1", "Categ2", "Categ3",
         "Categ4", "Categ5", "Categ6", "Categ7", "Categ8"
@@ -21,6 +21,7 @@ const ProductList = () => {
         ? products
         : products.filter(product => product.category === selectCategory);
 
+    if (loading) return <ProductLoadingSkelton />
     return (
         <>
             {/* Category Buttons */}
@@ -45,16 +46,16 @@ const ProductList = () => {
                     className="overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-200 ease-in rounded-t-lg"
                 >
                     <img
-                    className="w-full h-48 object-cover"
-                    src={product.image}
-                    alt={product.name}
+                        className="w-full h-48 object-cover"
+                        src={product.image}
+                        alt={product.name}
                     />
                     <div className="p-4">
-                    <h2 className="font-bold text-xl">{product.name}</h2>
-                    <p className="text-gray-600 mb-4 truncate">{product.description}</p>
-                    <span className="text-orange-600 font-semibold">
-                        ${product.price.toFixed(2)}
-                    </span>
+                        <h2 className="font-bold text-xl">{product.name}</h2>
+                        <p className="text-gray-600 mb-4 truncate">{product.description}</p>
+                        <span className="text-orange-600 font-semibold">
+                            <strong>${product.price.toFixed(2)}</strong>
+                        </span>
                     </div>
                 </Link>
                 ))}
