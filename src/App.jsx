@@ -25,6 +25,7 @@ import CustomerForm from './pages/dashboard/CustomerForm'
 import CategoryForm from './pages/dashboard/CategoryForm'
 import ProductForm from './pages/dashboard/ProductForm'
 import OrderForm from './pages/dashboard/OrderForm'
+import ProductDetails from './components/ProductDetails'
 const App = () => {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith('/dashboard');
@@ -38,6 +39,7 @@ const App = () => {
             <Route path='/order' element={<Order />}/>
             <Route path='/about' element={<About />}/>
             <Route path='/contact' element={<Contact />}/>
+            <Route path='/product-details/:id' element={<ProductDetails />}/>
             {/* unauthenticated routes */}
             <Route path='/signup' element={
               <UnAuthenticatedRoute>

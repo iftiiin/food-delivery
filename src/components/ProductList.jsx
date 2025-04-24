@@ -56,6 +56,7 @@ const ProductList = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                 {filteredProducts.map((product) => (
                 <Link
+                    to={`/product-details/${product.id}`}
                     key={product.id}
                     className="overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-200 ease-in rounded-t-lg"
                 >
