@@ -1,40 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import { getProducts } from '../lib/products';
+import { getCategories } from '../lib/categories';
+import ProductSkeleton from './productSkeleton';
 
 const ProductList = () => {
     const [selectCategory, setSelectCategory] = useState("All");
     const [loading, setLoading] = useState(false)
-    const categories = [
-        "All", "Categ1", "Categ2", "Categ3",
-        "Categ4", "Categ5", "Categ6", "Categ7", "Categ8"
-    ];
+    const [products, setProducts] = useState([])
+    const [categories, setCategories] = useState([])
 
-    const products = [
-        { id: 1, name: "Product 1", description: "Description 1", price: 10.0, image: "https://fakeimg.pl/250x250/?text=Product+1", category: "Categ1" },
-        { id: 2, name: "Product 2", description: "Description 2", price: 20.0, image: "https://fakeimg.pl/250x250/?text=Product+2", category: "Categ2" },
-        { id: 3, name: "Product 3", description: "Description 3", price: 30.0, image: "https://fakeimg.pl/250x250/?text=Product+3", category: "Categ3" },
-        { id: 4, name: "Product 4", description: "Description 4", price: 40.0, image: "https://fakeimg.pl/250x250/?text=Product+4", category: "Categ1" },
-        { id: 5, name: "Product 5", description: "Description 5", price: 50.0, image: "https://fakeimg.pl/250x250/?text=Product+5", category: "Categ2" },
-    ];
+    useEffect(()=> {
+        const fetchData = async() => {
+            try {
+                setLoading(true)
+                const { categories } = await getCategories()
+                setCategories([{ id: "All", name: "All" }, ...categories])
+                console.log(";;;;;;;;;;;;;;;;;;;;", categories)
+                const {products } = await  getProducts()
+                setProducts(products)
+            } catch (error) {
+                setLoading(false)
+                console.error("Failed", error)
+            } finally {
+                setLoading(false);
+            }
+            
 
+        }
+        fetchData()
+    }, [])
+    
     const filteredProducts = selectCategory === "All"
         ? products
-        : products.filter(product => product.category === selectCategory);
+        : products.filter(product => product.category_id === selectCategory);
 
-    if (loading) return <ProductLoadingSkelton />
+    if (loading) return <ProductSkeleton />
     return (
         <>
             {/* Category Buttons */}
             <div className="overflow-x-auto whitespace-nowrap px-4 py-3 flex gap-3">
                 {categories.map((cat) => (
-                <button
-                    key={cat}
-                    onClick={() => setSelectCategory(cat)}
-                    className={`px-6 py-2 rounded-full text-sm transition 
-                    ${selectCategory === cat ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
-                >
-                    {cat}
-                </button>
+                    <button
+                        key={cat.id}
+                        onClick={() => setSelectCategory(cat.id)}
+                        className={`px-6 py-2 rounded-full text-sm transition 
+                        ${selectCategory === cat.id ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                    >
+                        {cat.name}
+                    </button>
                 ))}
             </div>
 

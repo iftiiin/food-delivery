@@ -1,6 +1,6 @@
 import React from 'react'
 
-const productSkeleton = () => {
+const ProductSkeleton = () => {
 
     return (
         <>
@@ -33,4 +33,4 @@ const productSkeleton = () => {
     )
 }
 
-export default productSkeleton
+export default ProductSkeleton
