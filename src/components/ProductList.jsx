@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { getProducts } from '../lib/products';
 import { getCategories } from '../lib/categories';
 import ProductSkeleton from './productSkeleton';
+import ProductItem from './ProductItem';
 
 const ProductList = () => {
     const [selectCategory, setSelectCategory] = useState("All");
@@ -55,24 +56,7 @@ const ProductList = () => {
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                 {filteredProducts.map((product) => (
-                <Link
-                    to={`/product-details/${product.id}`}
-                    key={product.id}
-                    className="overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-200 ease-in rounded-t-lg"
-                >
-                    <img
-                        className="w-full h-48 object-cover"
-                        src={product.image}
-                        alt={product.name}
-                    />
-                    <div className="p-4">
-                        <h2 className="font-bold text-xl">{product.name}</h2>
-                        <p className="text-gray-600 mb-4 truncate">{product.description}</p>
-                        <span className="text-orange-600 font-semibold">
-                            <strong>${product.price.toFixed(2)}</strong>
-                        </span>
-                    </div>
-                </Link>
+                    <ProductItem key={product.id} product={product}/>
                 ))}
             </div>
         </>
