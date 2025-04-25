@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router';
 import ProductItem from '../components/ProductItem';
 import { getProducts } from '../lib/products';
-
+import { FiSearch, FiShoppingCart, FiUser, FiHeart, FiStar, FiClock, FiMapPin } from 'react-icons/fi';
 const Home = () => {
   const [products, setProducts] = useState([])
   useEffect(()=> {
         const fetchData = async() => {
             try {
                 const { products } = await  getProducts()
-                setProducts(products.slice(0,3))
+                setProducts(products.slice(0,6))
             } catch (error) {
                 console.error("Failed", error)
             } 
@@ -19,7 +19,7 @@ const Home = () => {
         fetchData()
     }, [])
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen  pb-8">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-orange-400 to-orange-600 text-white py-16 px-6">
         <div className="max-w-6xl mx-auto">
@@ -54,6 +54,34 @@ const Home = () => {
               ))}
           </div>
       </div>
+      {/* Delivery info */}
+      <div className="mt-16 bg-orange-500 rounded-xl shadow-md p-8 max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6 text-white text-center">How It Works</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FiSearch className="text-orange-500 text-2xl" />
+                </div>
+                <h3 className="font-bold text-lg mb-2 text-white">1. Search</h3>
+                <p className="text-white">Find your favorite food</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FiShoppingCart className="text-orange-500 text-2xl" />
+                </div>
+                <h3 className="font-bold text-lg mb-2 text-white">2. Order</h3>
+                <p className="text-white">Add items to your cart and checkout</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FiMapPin className="text-orange-500 text-2xl" />
+                </div>
+                <h3 className="font-bold text-lg mb-2 text-white">3. Enjoy</h3>
+                <p className="text-white">Track your order and enjoy your meal</p>
+              </div>
+            </div>
+       </div>
+      
     </div>
   );
 }
