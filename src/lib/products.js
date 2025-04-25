@@ -26,7 +26,7 @@ export const createProduct = async (product) => {
 }
 
 // Get all products
-export const getProducts = async ({ limit = 10, offset = 0 } = {}) => {
+export const getProducts = async ({ limit = 150, offset = 0 } = {}) => {
   const { data, error, count } = await supabase
     .from('products')
     .select('*', { count: 'exact' })

@@ -42,11 +42,11 @@ export const createOrder = async (order, orderLines) => {
 };
 
 // Get all orders
-export const getOrders = async ({ limit = 10, offset = 0 } = {}) => {
+export const getOrders = async ({ limit = 100, offset = 0 } = {}) => {
   const { data, error, count } = await supabase
     .from("orders")
     .select("*", { count: "exact" })
-    .order("id", { ascending: false })
+    .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
 
   if (error) {
