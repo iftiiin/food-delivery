@@ -1,26 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useOrder from "../context/OrderContext";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { getCustomerById, getCustomerByUserId } from "../lib/customers";
+import { createOrder } from "../lib/orders";
 
-const CartItems = () => {
-  const { products, updateQuantity, removeItemFromCart } = useOrder();
+const Cartproducts = () => {
+  const { products, updateQuantity, removeItemFromCart, clearCart } = useOrder();
+  const [customer , setCustomer] = useState("")
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
   const deliveryFee = 1;
   const subtotal = products.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, product) => acc + product.price * product.quantity,
     0
   );
   const total = subtotal + deliveryFee;
+  useEffect(() => {
+    const fetchCustomer = async () => {
+      try {
+        const data = await getCustomerByUserId(user.id);
+        setCustomer(data);
+      } catch (err) {
+        console.error("Failed to fetch customer:", err);
+      }
+    };
+
+    if (user) fetchCustomer();
+  }, [user]);
+
+  const handleCheckout = async () => {
+    if (!customer) {
+      toast.error("Customer not found.");
+      return;
+    }
+    console.log(",,,,,,,,,,,,,,,", customer)
+    const orderData = {
+      customer_id: customer.id,
+      date: new Date().toISOString(),
+      status: "pending",
+      total,
+    };
+
+    const orderLines = products.map((product) => ({
+      product_id: product.id,
+      quantity: product.quantity,
+      price: product.price,
+      subtotal: product.price * product.quantity,
+    }));
+
+    try {
+      await createOrder(orderData, orderLines);
+      clearCart(); 
+      toast.success("Thanks for your order!");
+      navigate("/");
+    } catch (err) {
+      toast.error("Failed to create order. Try again.");
+      console.error("Checkout error:", err);
+    }
+  };
 
   if (products.length === 0) {
     return (
-      <div className="text-center py-20 text-gray-600 text-xl">
+      <div className="text-center py-20 text-gray-600 text-xl min-h-screen">
         🛒 Your cart is empty.
       </div>
     );
   }
+  
 
   return (
-    <div className="p-4 sm:p-6 max-w-4xl mx-auto mb-32">
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto min-h-screen">
       {/* Cart Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-left min-w-[640px]">
@@ -87,7 +140,10 @@ const CartItems = () => {
           </div>
           <hr />
         </div>
-        <button className="mt-6 bg-orange-600 text-white px-6 py-3 rounded hover:bg-orange-700 transition cursor-pointer w-full sm:w-auto">
+        <button 
+          className="mt-6 bg-orange-600 text-white px-6 py-3 rounded hover:bg-orange-700 transition cursor-pointer w-full sm:w-auto"
+          onClick={handleCheckout}
+          >
           PROCEED TO CHECKOUT
         </button>
       </div>
@@ -95,4 +151,4 @@ const CartItems = () => {
   );
 };
 
-export default CartItems;
+export default Cartproducts;
