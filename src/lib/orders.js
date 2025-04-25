@@ -9,6 +9,7 @@ export const createOrder = async (order, orderLines) => {
       date: order.date,
       status: order.status,
       total: order.total,
+      delivery_fee: order.delivery_fee
     })
     .select()
     .single();
@@ -90,7 +91,8 @@ export const updateOrder = async (id, updates, lines) => {
         customer_id: updates.customer_id,
         date: updates.date,
         status: updates.status,
-        total: updates.total
+        total: updates.total,
+        delivery_fee: updates.deliveryFee
       })
       .eq("id", id)
       .select()

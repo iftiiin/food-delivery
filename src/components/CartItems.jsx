@@ -43,6 +43,7 @@ const Cartproducts = () => {
       date: new Date().toISOString(),
       status: "pending",
       total,
+      delivery_fee: 1
     };
 
     const orderLines = products.map((product) => ({
