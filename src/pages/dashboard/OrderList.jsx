@@ -59,7 +59,14 @@ const OrderList = () => {
       setIsDeleting(false);
     }
   };
-
+  const getStatusColor = (status) => {
+    switch(status) {
+      case 'delivered': return 'text-green-600 ';
+      case 'pending': return 'text-blue-600 ';
+      case 'canceled': return 'text-red-600';
+      default: return 'text-gray-600 ';
+    }
+  };
   return (
     <div className="p-6 min-h-screen">
       <button
@@ -87,7 +94,7 @@ const OrderList = () => {
                   <td className="px-4 py-3 text-slate-700">{order.date}</td>
                   <td className="px-4 py-3 text-slate-700">{customers.find(cust => cust.id === order.customer_id)?.name || 'Unknown'}</td>
                   <td className="px-4 py-3 text-slate-700">${order.total}</td>
-                  <td className="px-4 py-3 text-slate-700">{order.status}</td>
+                  <td className={`px-4 py-3 ${getStatusColor(order.status)} `}>{order.status}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-2">
                       <Link

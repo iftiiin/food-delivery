@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { createOrder, getOrderById, updateOrder } from "../../lib/orders";
 import { getCustomers } from "../../lib/customers";
 import { getProducts } from "../../lib/products";
+import { FaTrash } from 'react-icons/fa';
 
 const OrderForm = () => {
     const { id } = useParams();
@@ -248,7 +249,7 @@ const OrderForm = () => {
                                     className="text-red-600 font-bold text-sm"
                                     onClick={() => removeLine(index)}
                                     >
-                                    Remove
+                                    <FaTrash />
                                 </button>
                             </div>
                         </div>
