@@ -27,13 +27,12 @@ const Header = () => {
                     <nav className='hidden sm:ml-6 sm:flex sm:space-x-8'>
                       <Link to="/" className='flex items-center px-1 pt-1  text-sm font-medium text-gray-500 hover:text-orange-600'>Home</Link>
                       <Link to="/order" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Order</Link>
-                      <Link to="/about" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>About</Link>
                       <Link to="/contact" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Contact</Link>
-                    {
-                      isLoggedIn && (
-                      <Link to="/dashboard" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Dashboard</Link>
-                      )
-                    }  
+                      {
+                        isLoggedIn && profile?.profile.is_admin &&(
+                        <Link to="/dashboard" className='inline-flex justify-center items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-orange-600'>Dashboard</Link>
+                        )
+                      }  
                     </nav>
                 </div>
                 {/* Profile and cart  */}
@@ -50,7 +49,7 @@ const Header = () => {
                     </Link>
 
                     <div className='relative' >
-                      <button className='flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
+                      <button className='flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 focus:outline-none '
                         onMouseEnter={()=> setIsDropdownOpen(true)}
                         onClick={()=> setIsDropdownOpen(!isDropdownOpen)}
                         >
@@ -68,11 +67,11 @@ const Header = () => {
                             onMouseLeave={()=> setIsDropdownOpen(false)}
                             >
                             
-                              <Link to="/profile" className='block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100 transition'>Your Profile</Link>
+                              <Link to="/profile" className='block px-4 py-2 text-md text-gray-700 hover:bg-orange-100 transition'>Your Profile</Link>
                               <button  onClick={logout} className='w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-100 transition'>Sign Out</button>
                             </div>
-                        )
-                      }
+                          )
+                        }
                     </div>
                     </>
                   ):
@@ -98,15 +97,12 @@ const Header = () => {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div className="sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
+            <div className="pt-2 pb-3 space-y-1 bg-white hover:bg-orange-50">
               <Link to="/" className="block pl-3 pr-4 py-2  text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50">
                 Home
               </Link>
               <Link to="/order" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
                 Order
-              </Link>
-              <Link to="/about" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
-                About
               </Link>
               <Link to="/contact" className="block pl-3 pr-4 py-2  border-transparent text-base font-medium text-gray-600 hover:text-orange-700 hover:bg-orange-50 ">
                 Contact

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router';
 import ProductItem from '../components/ProductItem';
 import { getProducts } from '../lib/products';
-import { FiSearch, FiShoppingCart, FiUser, FiHeart, FiStar, FiClock, FiMapPin } from 'react-icons/fi';
+import { FiSearch, FiShoppingCart, FiMapPin } from 'react-icons/fi';
 const Home = () => {
   const [products, setProducts] = useState([])
   useEffect(()=> {
@@ -48,7 +48,7 @@ const Home = () => {
               View All</Link>
             </div>
             
-            <div  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+            <div  className="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
               {products.map((product)=> (
                 <ProductItem key={product.id} product={product}/>
               ))}

@@ -4,7 +4,6 @@ import Footer from './components/Footer'
 import { Route, Routes, useLocation } from 'react-router'
 import Home from './pages/Home'
 import Order from './pages/Order'
-import About from './pages/About'
 import Contact from './pages/Contact'
 import SignUp from './pages/SignUp'
 import { Toaster } from 'react-hot-toast'
@@ -40,7 +39,6 @@ const App = () => {
             <Routes>
                 <Route path='/' element={<Home/>} />
                 <Route path='/order' element={<Order />}/>
-                <Route path='/about' element={<About />}/>
                 <Route path='/contact' element={<Contact />}/>
                 <Route path='/product-details/:id' element={<ProductDetails />}/>
                 <Route path='/cart' element={<CartItems />}/>
