@@ -21,7 +21,7 @@ export const createCategory = async (category) => {
 }
 
 //  Get all category 
-export const getCategories = async ({ limit = 10, offset = 0 } = {}) => {
+export const getCategories = async ({ limit = 20, offset = 0 } = {}) => {
   const { data, error, count } = await supabase
     .from('categories')
     .select('*')

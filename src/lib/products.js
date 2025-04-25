@@ -8,6 +8,7 @@ export const createProduct = async (product) => {
     image: product.image,
     category_id: product.category,
     price: product.price,
+    description: product.description
   }
 
   const { data, error } = await supabase
@@ -25,7 +26,7 @@ export const createProduct = async (product) => {
 }
 
 // Get all products
-export const getProducts = async ({ limit = 10, offset = 0 } = {}) => {
+export const getProducts = async ({ limit = 150, offset = 0 } = {}) => {
   const { data, error, count } = await supabase
     .from('products')
     .select('*', { count: 'exact' })
@@ -65,6 +66,7 @@ export const updateProduct = async (id, updates) => {
       image: updates.image,
       category_id: updates.category,
       price: updates.price,
+      description: updates.description
     })
     .eq('id', id)
     .select()

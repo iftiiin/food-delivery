@@ -18,9 +18,9 @@ export default function ProtectedRoute({ children, redirectTo = "/signin" }) {
 
 
     
-    if (isLoggedIn ) {
+    if (isLoggedIn && profile?.profile.is_admin === true) {
         return children;
-      }
+    }
     
-      return <Navigate to={redirectTo} replace />;
+    return <Navigate to={redirectTo} replace />;
 }

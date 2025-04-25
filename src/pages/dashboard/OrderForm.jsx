@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { createOrder, getOrderById, updateOrder } from "../../lib/orders";
 import { getCustomers } from "../../lib/customers";
 import { getProducts } from "../../lib/products";
+import { FaTrash } from 'react-icons/fa';
 
 const OrderForm = () => {
     const { id } = useParams();
@@ -15,6 +16,7 @@ const OrderForm = () => {
         selectedCustomer: "",
         orderDate: "",
         status: "pending",
+        deliveryFee: 0
     });
 
     const [orderLines, setOrderLines] = useState([]);
@@ -28,19 +30,20 @@ const OrderForm = () => {
             setProducts(products);
 
             if (isEditMode) {
-            const order = await getOrderById(id);
-            setFormData({
-                selectedCustomer: order.customer_id,
-                orderDate: order.date || "",
-                status: order.status,
-            });
-            const lines = order.order_lines.map((line) => ({
-                id: line.id,
-                productId: line.product_id,
-                quantity: line.quantity,
-                price: line.price,
-            }));
-            setOrderLines(lines);
+                const order = await getOrderById(id);
+                setFormData({
+                    selectedCustomer: order.customer_id,
+                    orderDate: order.date || "",
+                    status: order.status,
+                    deliveryFee: order.delivery_fee
+                });
+                const lines = order.order_lines.map((line) => ({
+                    id: line.id,
+                    productId: line.product_id,
+                    quantity: line.quantity,
+                    price: line.price,
+                }));
+                setOrderLines(lines);
             }
         } catch (error) {
             toast.error("Failed to load data");
@@ -79,12 +82,16 @@ const OrderForm = () => {
     };
 
     const calculateSubtotal = (line) => line.quantity * line.price;
-    const calculateTotal = () =>
-        orderLines.reduce((sum, line) => sum + calculateSubtotal(line), 0);
-
+    // const calculateTotal = () =>
+    //     orderLines.reduce((sum, line) => sum + calculateSubtotal(line), 0);
+    const calculateTotal = () => {
+        const subtotal = orderLines.reduce((sum, line) => sum + calculateSubtotal(line), 0);
+        return subtotal + Number(formData.deliveryFee || 0);
+    };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { selectedCustomer, orderDate, status } = formData;
+        const { selectedCustomer, orderDate, status, deliveryFee } = formData;
 
         if (!selectedCustomer || !orderDate || orderLines.length === 0) {
             toast.error("Please complete all fields.");
@@ -104,6 +111,8 @@ const OrderForm = () => {
             status,
             total: calculateTotal(),
             date: orderDate,
+            delivery_fee: deliveryFee
+
         };
 
         try {
@@ -132,23 +141,40 @@ const OrderForm = () => {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium mb-1">
-                        Select Customer
-                        </label>
-                        <select
-                        name="selectedCustomer"
-                        className="w-full px-4 py-2 border border-gray-300"
-                        value={formData.selectedCustomer}
-                        onChange={handleChange}
-                        >
-                        <option value="">-- Select Customer --</option>
-                        {customers.map((c) => (
-                            <option key={c.id} value={c.id}>
-                            {c.name}
-                            </option>
-                        ))}
-                        </select>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium mb-1">
+                            Select Customer
+                            </label>
+                            <select
+                            name="selectedCustomer"
+                            className="w-full px-4 py-2 border border-gray-300"
+                            value={formData.selectedCustomer}
+                            onChange={handleChange}
+                            >
+                            <option value="">-- Select Customer --</option>
+                            {customers.map((c) => (
+                                <option key={c.id} value={c.id}>
+                                {c.name}
+                                </option>
+                            ))}
+                            </select>
+                        </div>
+                        <div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">
+                                    Delivery Fee
+                                </label>
+                                <input
+                                    name="deliveryFee"
+                                    type="number"
+                                    className="w-full px-3 py-2 border border-gray-300"
+                                    value={formData.deliveryFee}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -248,7 +274,7 @@ const OrderForm = () => {
                                     className="text-red-600 font-bold text-sm"
                                     onClick={() => removeLine(index)}
                                     >
-                                    Remove
+                                    <FaTrash />
                                 </button>
                             </div>
                         </div>

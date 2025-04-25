@@ -16,6 +16,12 @@ const Overview = () => {
     orders: null,
     revenue: null,
   });
+  const [statusData, setStatusData] = useState({
+    pending: 0,
+    delivered: 0,
+    canceled: 0,
+  });
+  
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -30,7 +36,21 @@ const Overview = () => {
         const orders = orderCount;
 
         const revenue = orderss.reduce((acc, order) => acc + (order.total || 0), 0);
-
+        const statusCount = {
+          pending: 0,
+          delivered: 0,
+          canceled: 0,
+        };
+        
+        orderss.forEach((order) => {
+          const status = order.status?.toLowerCase();
+          if (statusCount[status] !== undefined) {
+            statusCount[status]++;
+          }
+        });
+        
+        setStatusData(statusCount);
+        
         setCounts({
           customers,
           products,
@@ -67,7 +87,24 @@ const Overview = () => {
       icon: <FaDollarSign className="text-xl text-orange-500" />,
     },
   ];
+  const totalStatus = Object.values(statusData).reduce((sum, val) => sum + val, 0);
 
+  const getBarWidth = (count) => {
+    return totalStatus > 0 ? `${(count / totalStatus) * 100}%` : "0%";
+  };
+
+  const getColor = (status) => {
+    switch (status) {
+      case "delivered":
+        return "bg-green-500";
+      case "pending":
+        return "bg-blue-500";
+      case "canceled":
+        return "bg-red-500";
+      default:
+        return "bg-gray-400";
+    }
+  };
   return (
     <div className="min-h-screen p-6">
       <h1 className="text-2xl font-bold mb-6">Overview</h1>
@@ -87,7 +124,28 @@ const Overview = () => {
           </div>
         ))}
       </div>
+      <div className="bg-white p-4 rounded shadow w-full max-w-xl mt-10">
+        <h2 className="text-lg font-bold mb-4">Order Status Overview</h2>
+        <div className="space-y-4">
+          {Object.entries(statusData).map(([status, count]) => (
+            <div key={status}>
+              <div className="flex justify-between text-sm mb-1">
+                <span className="capitalize">{status}</span>
+                <span>{count}</span>
+              </div>
+              <div className="w-full h-4 bg-gray-300 rounded overflow-hidden">
+                <div
+                  className={`h-full ${getColor(status)}`}
+                  style={{ width: getBarWidth(count) }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
+    
+    
   );
 };
 

@@ -70,7 +70,7 @@ export async function signIn (email,password) {
     
   
     return data;
-  }
+}
 
 
 export async function getUserProfile(userId) {
@@ -137,7 +137,7 @@ export async function getUserProfile(userId) {
           profile: data,
           customer: customer || null
         };
-  }
+}
 
 //   Login or Logout state
 export  function onAuthChange  (callback)  {

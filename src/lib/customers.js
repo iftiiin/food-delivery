@@ -92,3 +92,18 @@ export const deleteCustomer = async (id) => {
 
   return data
 }
+// Get customer By user id
+export const getCustomerByUserId = async (user_id) => {
+  const { data, error } = await supabase
+    .from('customers')
+    .select('*')
+    .eq('user_id', user_id)
+    .single()
+
+  if (error) {
+    console.error("Error fetching customer:", error)
+    throw error
+  }
+
+  return data
+}

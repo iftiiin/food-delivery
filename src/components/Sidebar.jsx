@@ -7,7 +7,7 @@ import {
   HiUsers,
   HiMenu,
 } from "react-icons/hi";
-import { MdCategory, MdPayment } from "react-icons/md";
+import { MdCategory } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 
@@ -108,19 +108,7 @@ export default function Sidebar() {
                         <HiClipboardList className="text-lg" />
                         <span>Orders</span>
                     </NavLink>
-                    <NavLink
-                    to="payments"
-                    className={({ isActive }) =>
-                        `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
-                        isActive
-                            ? "bg-orange-100 text-orange-600"
-                            : "hover:bg-slate-100"
-                        }`
-                    }
-                    >
-                        <MdPayment className="text-lg" />
-                        <span>Payments</span>
-                    </NavLink>
+                    
                 </div>
                 {/* Customer Management */}
                 <div className="mb-6" >
@@ -139,23 +127,7 @@ export default function Sidebar() {
                         <span>Customers</span>
                     </NavLink>
                 </div>
-                {/* Users */}
-                <div>
-                    <p className="text-xs uppercase mb-2">Users</p>
-                    <NavLink
-                    to="users"
-                    className={({ isActive }) =>
-                        `flex items-center gap-2 p-2 rounded transition-colors duration-200 ${
-                        isActive
-                            ? "bg-orange-100 text-orange-600"
-                            : "hover:bg-slate-100"
-                        }`
-                    }
-                    >
-                        <HiUsers className="text-lg" />
-                        <span>Users</span>
-                    </NavLink>
-                </div>
+                
             </nav>
         </aside>
         </>

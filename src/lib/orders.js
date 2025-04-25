@@ -9,6 +9,7 @@ export const createOrder = async (order, orderLines) => {
       date: order.date,
       status: order.status,
       total: order.total,
+      delivery_fee: order.delivery_fee
     })
     .select()
     .single();
@@ -41,11 +42,11 @@ export const createOrder = async (order, orderLines) => {
 };
 
 // Get all orders
-export const getOrders = async ({ limit = 10, offset = 0 } = {}) => {
+export const getOrders = async ({ limit = 100, offset = 0 } = {}) => {
   const { data, error, count } = await supabase
     .from("orders")
     .select("*", { count: "exact" })
-    .order("id", { ascending: false })
+    .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
 
   if (error) {
@@ -90,7 +91,8 @@ export const updateOrder = async (id, updates, lines) => {
         customer_id: updates.customer_id,
         date: updates.date,
         status: updates.status,
-        total: updates.total
+        total: updates.total,
+        delivery_fee: updates.deliveryFee
       })
       .eq("id", id)
       .select()

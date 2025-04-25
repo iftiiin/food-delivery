@@ -69,9 +69,9 @@ const SignIn = () => {
                         <label className="block text-gray-700 text-sm font-semibold" htmlFor="password">
                         Password
                         </label>
-                        <Link to="/forgot-password" className="text-sm text-orange-600 hover:text-orange-800">
+                        {/* <Link to="/forgot-password" className="text-sm text-orange-600 hover:text-orange-800">
                         Forgot password?
-                        </Link>
+                        </Link> */}
                     </div>
                     <input
                         id="password"
