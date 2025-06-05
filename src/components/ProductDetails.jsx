@@ -35,7 +35,7 @@ const ProductDetails = () => {
             {/* Back Button */}
             <button
                 onClick={() => navigate(-1)}
-                className="mb-4 bg-orange-600 text-white px-4 py-2 rounded-lg shadow hover:bg-orange-700 transition-colors duration-200"
+                className="mb-4 bg-orange-600 text-white px-4 py-2 rounded-lg shadow hover:bg-orange-700 transition-colors duration-200 cursor-pointer"
             >
                 Go Back
             </button>
@@ -70,7 +70,7 @@ const ProductDetails = () => {
                         </button>
                         <button
                             onClick={() => navigate('/cart')}
-                            className="bg-gray-800 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-900 transition-colors duration-200"
+                            className="bg-gray-800 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-900 transition-colors duration-200 cursor-pointer"
                             >
                             Go to Cart
                         </button>

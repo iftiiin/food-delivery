@@ -45,7 +45,7 @@ const ProductList = () => {
                     <button
                         key={cat.id}
                         onClick={() => setSelectCategory(cat.id)}
-                        className={`px-6 py-2 rounded-full text-sm transition 
+                        className={`px-6 py-2 rounded-full text-sm transition cursor-pointer
                         ${selectCategory === cat.id ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
                     >
                         {cat.name}

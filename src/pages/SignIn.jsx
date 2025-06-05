@@ -91,7 +91,7 @@ const SignIn = () => {
         
                     <button
                         type="submit"
-                        className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition duration-200"
+                        className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition duration-200 cursor-pointer"
                         disabled={isLoading}
                         >
                         {isLoading ? 'Signing in...' : 'Sign In'}

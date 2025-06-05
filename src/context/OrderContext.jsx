@@ -1,11 +1,14 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer, { initialState } from "./reducer";
+import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router";
 
 
 const OrderContext = createContext(null);
 
 export const OrderProvider = ({children}) =>{
-
+    const navigate = useNavigate()
+    const { user } = useAuth()
     const [ state, dispatch ] = useReducer(reducer,initialState);
 
     useEffect(() => {
@@ -28,29 +31,34 @@ export const OrderProvider = ({children}) =>{
     }
 
     const AddItemToCart = (product) =>{
-
-        const productIndex = state.products.findIndex(p => p.id === product.id);
-        let updatedProducts = [...state.products];
-
-        if(productIndex !== -1){
-            updatedProducts[productIndex] = {
-                ...updatedProducts[productIndex],
-                quantity : updatedProducts[productIndex].quantity +1
+        if (user) {
+            const productIndex = state.products.findIndex(p => p.id === product.id);
+            let updatedProducts = [...state.products];
+    
+            if(productIndex !== -1){
+                updatedProducts[productIndex] = {
+                    ...updatedProducts[productIndex],
+                    quantity : updatedProducts[productIndex].quantity +1
+                }
+            }else{
+                updatedProducts = [
+                    ...updatedProducts,
+                    {
+                        ...product, quantity:1
+                    }  
+                ]
             }
-        }else{
-            updatedProducts = [
-                ...updatedProducts,
-                {
-                    ...product, quantity:1
-                }  
-            ]
+            calculateTotalPrice(updatedProducts);
+    
+            dispatch({
+                type:"ADD_TO_CART",
+                payload:updatedProducts
+            })
         }
-        calculateTotalPrice(updatedProducts);
-
-        dispatch({
-            type:"ADD_TO_CART",
-            payload:updatedProducts
-        })
+        else {
+            navigate('/signin')
+        }
+       
     }
 
 

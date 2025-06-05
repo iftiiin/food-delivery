@@ -206,79 +206,81 @@ const OrderForm = () => {
                     </div>
 
                     {orderLines.length > 0 && (
-                        <h1 className="text-lg font-semibold mt-6 mb-2">Order Lines</h1>
+                        <>
+                            <h1 className="text-lg font-semibold mt-6 mb-2">Order Lines</h1>
+
+                            {/* Header Labels */}
+                            <div className="grid grid-cols-1 md:grid-cols-6 gap-4 font-medium text-sm mb-1">
+                            <div className="md:col-span-2">Product</div>
+                            <div>Quantity</div>
+                            <div>Price</div>
+                            <div>Subtotal</div>
+                            <div></div> 
+                            </div>
+                        </>
                     )}
 
                     {orderLines.map((line, index) => (
                         <div
                             key={index}
-                            className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end"
-                            >
+                            className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end mb-2"
+                        >
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-medium mb-1">
-                                    Product
-                                </label>
-                                <select
-                                    className="w-full px-3 py-2 border border-gray-300"
-                                    value={line.productId}
-                                    onChange={(e) =>
-                                        handleLineChange(index, "productId", e.target.value)
-                                    }
-                                    >
-                                    <option value="">-- Select Product --</option>
-                                    {products.map((p) => (
-                                        <option key={p.id} value={p.id}>
-                                        {p.name}
-                                        </option>
-                                    ))}
-                                </select>
+                            <select
+                                className="w-full px-3 py-2 border border-gray-300"
+                                value={line.productId}
+                                onChange={(e) =>
+                                handleLineChange(index, "productId", e.target.value)
+                                }
+                            >
+                                <option value="">-- Select Product --</option>
+                                {products.map((p) => (
+                                <option key={p.id} value={p.id}>
+                                    {p.name}
+                                </option>
+                                ))}
+                            </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Quantity
-                                    </label>
-                                    <input
-                                    type="number"
-                                    min="1"
-                                    className="w-full px-3 py-2 border border-gray-300"
-                                    value={line.quantity}
-                                    onChange={(e) =>
-                                        handleLineChange(index, "quantity", parseInt(e.target.value))
-                                    }
-                                />
+                            <input
+                                type="number"
+                                min="1"
+                                className="w-full px-3 py-2 border border-gray-300"
+                                value={line.quantity}
+                                onChange={(e) =>
+                                handleLineChange(index, "quantity", parseInt(e.target.value))
+                                }
+                            />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-1">Price</label>
-                                    <input
-                                    type="number"
-                                    readOnly
-                                    className="w-full px-3 py-2 border border-gray-300 bg-gray-100"
-                                    value={line.price}
-                                />
+                            <input
+                                type="number"
+                                readOnly
+                                className="w-full px-3 py-2 border border-gray-300 bg-gray-100"
+                                value={line.price}
+                            />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium mb-1">
-                                Subtotal
-                                </label>
-                                <div className="w-full px-3 py-2 border border-gray-300 bg-gray-100">
+                            <div className="w-full px-3 py-2 border border-gray-300 bg-gray-100">
                                 {calculateSubtotal(line).toFixed(2)}
-                                </div>
+                            </div>
                             </div>
 
                             <div>
-                                <button
-                                    type="button"
-                                    className="text-red-600 font-bold text-sm"
-                                    onClick={() => removeLine(index)}
-                                    >
-                                    <FaTrash />
-                                </button>
+                            <button
+                                type="button"
+                                className="text-red-600 font-bold text-sm"
+                                onClick={() => removeLine(index)}
+                            >
+                                <FaTrash />
+                            </button>
                             </div>
                         </div>
                     ))}
+
 
                     <button
                         type="button"
